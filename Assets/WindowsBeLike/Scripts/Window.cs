@@ -1,14 +1,30 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(FullScreenRect))]
-public class Window : MonoBehaviour
+namespace WindowsBeLike
 {
-    public string Title;
-    public TextMeshProUGUI titleTextBox;
-
-    public virtual void Update()
+    [RequireComponent(typeof(FullScreenRect))]
+    public class Window : MonoBehaviour
     {
-        titleTextBox.text = Title;
+        public string Title;
+        public TextMeshProUGUI titleTextBox;
+        private RectTransform parentRect;
+
+        public virtual void Update()
+        {
+            titleTextBox.text = Title;
+        }
+
+        public virtual void OnAwake()
+        {
+            parentRect = transform.parent as RectTransform;
+        }
+
+        public virtual void OnPointerDown(PointerEventData data)
+        {
+          //  if (data.button != 0) return;
+            parentRect.SetAsLastSibling();
+        }
     }
 }

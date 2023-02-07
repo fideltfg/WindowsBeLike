@@ -1,4 +1,5 @@
 using UnityEngine;
+using WindowsBeLike;
 
 public class FullScreenRect : MonoBehaviour
 {
@@ -43,13 +44,14 @@ public class FullScreenRect : MonoBehaviour
 
     public void ToggleFullScreen()
     {
+        transform.SetAsLastSibling();
         if (!isAnimating)
         {
             if (!isFullScreen)
             {
                 UpdateValues();
-                targetAnchoredPosition = Vector2.zero;
-                targetSizeDelta = new Vector2(Screen.width, Screen.height);
+                targetAnchoredPosition = new Vector2(0, -UIController.Instance.TaskAreaHeight);
+                targetSizeDelta = new Vector2(Screen.width, Screen.height - UIController.Instance.TaskAreaHeight);
                 isFullScreen = true;
             }
             else
