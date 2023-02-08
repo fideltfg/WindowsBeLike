@@ -31,7 +31,7 @@ namespace WindowsBeLike
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (transform.parent != null)
+            if (GetComponentInParent<Window>())
             {
                 transform.parent.SetAsLastSibling();
             }

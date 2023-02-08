@@ -16,7 +16,6 @@ namespace WindowsBeLike
             {
                 canvasRect = canvas.transform as RectTransform;
                 parentRect = transform.parent as RectTransform;
-                //  thisRect = transform as RectTransform;
             }
         }
 
@@ -24,6 +23,9 @@ namespace WindowsBeLike
         {
             if (data.button != 0) return;
             parentRect.SetAsLastSibling();
+
+            // make the windows follow the mouse pointer at the point the user clicked.
+            // without this the window will follow at the pivot point
             RectTransformUtility.ScreenPointToLocalPointInRectangle(parentRect, data.position, data.pressEventCamera, out pointerOffset);
         }
 
@@ -61,6 +63,6 @@ namespace WindowsBeLike
             Vector2 newPointerPosition = new Vector2(clampedX, clampedY);
             return newPointerPosition;
         }
-    }
+    } 
 
 }

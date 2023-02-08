@@ -1,5 +1,6 @@
 using Pooling;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,7 +23,8 @@ namespace WindowsBeLike
         public Color32 DisabledColor;
         public Color32 DefaultBacgroundColor;
 
-        Dictionary<string, Window> windowList = new Dictionary<string, Window>();
+        [Serialize]
+        public List<Window> WindowList = new List<Window>();
 
         private void OnEnable()
         {
@@ -70,14 +72,6 @@ namespace WindowsBeLike
             }
         }
 
-        /*    public void ResizeImageToFitParent(RectTransform imageRectTransform)
-            {
-                float parentWidth = imageRectTransform.parent.GetComponent<RectTransform>().rect.width;
-                float aspectRatio = imageRectTransform.rect.height / imageRectTransform.rect.width;
-                imageRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, parentWidth);
-                imageRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, parentWidth * aspectRatio);
-            }*/
-
         public static bool ObjectInLayerMask(GameObject obj, LayerMask layer)
         {
             return (layer.value & (1 << obj.layer)) > 0;
@@ -86,8 +80,19 @@ namespace WindowsBeLike
         public void NewWindow()
         {
             GameObject newWindow = Pooler.root.GetPooledInstance(DefaultWindowPrefab.gameObject);
+            newWindow.transform.position = Vector3.zero;
             newWindow.transform.SetParent(transform);
             newWindow.SetActive(true);
+            AddNewWindowToWindowList(newWindow.GetComponent<Window>());
+        }
+
+        public void AddNewWindowToWindowList(Window window)
+        {
+            if (WindowList.Contains(window) == false)
+            {
+                WindowList.Add(window);
+                window.windowIndex = WindowList.IndexOf(window);
+            }
         }
 
     }

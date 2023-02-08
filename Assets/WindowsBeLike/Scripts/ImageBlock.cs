@@ -26,7 +26,7 @@ namespace WindowsBeLike
             if (desiredHeight > parentRect.rect.height)
             {
                 float desiredWidth = parentRect.rect.height * imageAspectRatio;
-                image.rectTransform.sizeDelta = new Vector2(desiredWidth, parentRect.rect.height - 22);
+                image.rectTransform.sizeDelta = new Vector2(desiredWidth, parentRect.rect.height);
             }
             else
             {

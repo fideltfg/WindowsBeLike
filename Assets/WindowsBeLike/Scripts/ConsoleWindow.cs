@@ -8,7 +8,7 @@ namespace WindowsBeLike
 {
     public class ConsoleWindow : Window
     {
-    
+
         public GameObject ChatPanel;
         public GameObject TextBlock;
         public GameObject ImageBlock;
@@ -26,24 +26,34 @@ namespace WindowsBeLike
         [SerializeField]
         List<Message> MessageList = new List<Message>();
 
+        public override void Start()
+        {
+            base.Start();
+            ConsoleIntro();
+        }
+
+        public void CLS()
+        {
+            Debug.Log("cls");
+            for (int i = 0; i < MessageList.Count; i++)
+            {
+                MessageList[i].textObject.gameObject.SetActive(false);
+
+            }
+            MessageList.Clear();
+            ConsoleIntro();
+        }
+
+
         public override void Update()
         {
             base.Update();
+
             // TODO move this to somplace more sensible
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                if (chatBox.isFocused == false)
-                {
-                    if (chatBox.text.Length > 0)
-                    {
-                        // repeat the input back in the messanger window.
-                        Send(chatBox.text, ConsoleWindow.MessageType.PLAYER);
-                        API.Parse(chatBox.text);
-                        chatBox.text = "";
-                    }
-                }
+               
             }
-
         }
 
         public void Send(string messageText, MessageType type = MessageType.INFO)
@@ -54,10 +64,12 @@ namespace WindowsBeLike
                 MessageList[0].textObject.gameObject.SetActive(false);
                 MessageList.RemoveAt(0);
             }
+
             GameObject _textObject = Pooling.Pooler.root.GetPooledInstance(TextBlock);
             TextMeshProUGUI t = _textObject.GetComponent<TextMeshProUGUI>();
             _textObject.transform.SetParent(ChatPanel.transform, false);
             _textObject.gameObject.SetActive(true);
+
             MessageList.Add(FormatMessage(new Message()
             {
                 messageText = messageText,
@@ -65,6 +77,7 @@ namespace WindowsBeLike
                 textObject = t, //Instantiate(TextBlock, ChatPanel.transform).GetComponent<Text>(),
                 messageType = type
             }));
+
             // needed to get the scroll view to refresh corretly.
             Canvas.ForceUpdateCanvases();
             //  ChatPanel.GetComponentInParent<ScrollRect>().scroll
@@ -93,10 +106,28 @@ namespace WindowsBeLike
             return message;
         }
 
-        public void OnInputChange()
+
+
+        void ConsoleIntro()
         {
-            Send("Input End", MessageType.WARNING);
+            string text = "Welcome to Windows be like! Type /help or another valid command.";
+            Send(text);
         }
+
+        public void OnInputEnd()
+        {
+            if (chatBox.isFocused == false)
+            {
+                if (chatBox.text.Length > 0)
+                {
+                    // repeat the input back in the messanger window.
+                    Send(chatBox.text, ConsoleWindow.MessageType.PLAYER);
+                    API.Parse(chatBox.text);
+                    chatBox.text = "";
+                }
+            }
+        }
+
 
     }
 
@@ -109,6 +140,8 @@ namespace WindowsBeLike
 
 
     }
+
+
 
 
 }

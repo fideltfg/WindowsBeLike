@@ -27,15 +27,10 @@ namespace WindowsBeLike
             }
         }
 
-        void Update()
+        public void OnPointerDown(PointerEventData data)
         {
             maxWidth = canvasRectTransform.sizeDelta.x - parentRectTransform.anchoredPosition.x;
             maxHeight = canvasRectTransform.sizeDelta.y - parentRectTransform.anchoredPosition.y;
-        }
-
-
-        public void OnPointerDown(PointerEventData data)
-        {
             panelRectTransform.SetAsLastSibling();
             RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, data.position, data.pressEventCamera, out pointerOffset);
         }
