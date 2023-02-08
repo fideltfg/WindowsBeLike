@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -9,7 +11,7 @@ namespace WindowsBeLike
     {
         RectTransform targetWindow;
         UIController _UIController;
-        public GameObject SubItem;
+        public GameObject MenuContainer;
         public GameObject Highlighter;
 
         private void OnEnable()
@@ -18,9 +20,9 @@ namespace WindowsBeLike
             _UIController = GetComponentInParent<UIController>();
             targetWindow = GetComponentInParent<RectTransform>();
             transform.SetAsLastSibling();
-            if (SubItem != null)
+            if (MenuContainer != null)
             {
-                SubItem.SetActive(false);
+                MenuContainer.SetActive(false);
             }
             if (Highlighter != null)
             {
@@ -39,11 +41,16 @@ namespace WindowsBeLike
             {
                 transform.SetAsLastSibling();
             }
-       
-            if (SubItem != null)
+
+            ToggleMenu();
+        }
+
+        public void ToggleMenu()
+        {
+            if (MenuContainer != null)
             {
-                SubItem.SetActive(!SubItem.activeSelf);
-                SubItem.transform.SetAsLastSibling();
+                MenuContainer.SetActive(!MenuContainer.activeSelf);
+                MenuContainer.transform.SetAsLastSibling();
             }
         }
 
@@ -57,9 +64,9 @@ namespace WindowsBeLike
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (SubItem != null)
+            if (MenuContainer != null)
             {
-                SubItem.SetActive(false);
+                MenuContainer.SetActive(false);
             }
             if (Highlighter != null)
             {

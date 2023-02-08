@@ -35,7 +35,7 @@ PrefabInstance:
     - target: {fileID: 1289750163016098198, guid: a2aae2c1c4332f94caf3beac81e401d5,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: WindowsBeLike.LeftMenuController, Assembly-CSharp
+      value: WindowsBeLike.MenuController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1289750163016098198, guid: a2aae2c1c4332f94caf3beac81e401d5,
         type: 3}
@@ -80,7 +80,7 @@ PrefabInstance:
     - target: {fileID: 4284612322942866933, guid: a2aae2c1c4332f94caf3beac81e401d5,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4284612322942866933, guid: a2aae2c1c4332f94caf3beac81e401d5,
         type: 3}
@@ -150,7 +150,7 @@ PrefabInstance:
     - target: {fileID: 6603326067349927503, guid: a2aae2c1c4332f94caf3beac81e401d5,
         type: 3}
       propertyPath: m_Name
-      value: Open Console Button
+      value: Default Button Variant - Console
       objectReference: {fileID: 0}
     - target: {fileID: 7084047165591966094, guid: a2aae2c1c4332f94caf3beac81e401d5,
         type: 3}
