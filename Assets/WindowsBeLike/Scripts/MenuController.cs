@@ -83,6 +83,11 @@ namespace WindowsBeLike
         {
             _UIController.ToggleConsoleWindow();
         }
+
+        public void ShowTestModal()
+        {
+            _UIController.DisplayModal("Did you read the instuctions?", _UIController.ModalYesCallback, _UIController.ModalNoCallback);
+        }
     }
 
 }

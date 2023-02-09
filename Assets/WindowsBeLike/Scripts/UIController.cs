@@ -1,6 +1,8 @@
 using Pooling;
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +11,9 @@ namespace WindowsBeLike
     public class UIController : MonoBehaviour
     {
         public Window DefaultWindowPrefab;
-        public Window ConsoleWindow;
+        public ConsoleWindow Console;
+        public ModalWindow Modal;
+
         public static UIController Instance { get; private set; }
         public Pooler poolerPrefab;
         Pooler pooler;
@@ -66,9 +70,9 @@ namespace WindowsBeLike
 
         public void ToggleConsoleWindow()
         {
-            if (ConsoleWindow != null)
+            if (Console != null)
             {
-                ConsoleWindow.gameObject.SetActive(!ConsoleWindow.gameObject.activeSelf);
+                Console.gameObject.SetActive(!Console.gameObject.activeSelf);
             }
         }
 
@@ -80,7 +84,7 @@ namespace WindowsBeLike
         public void NewWindow()
         {
             GameObject newWindow = Pooler.root.GetPooledInstance(DefaultWindowPrefab.gameObject);
-            newWindow.transform.position = Vector3.zero;
+            newWindow.transform.position = transform.position;
             newWindow.transform.SetParent(transform);
             newWindow.SetActive(true);
             AddNewWindowToWindowList(newWindow.GetComponent<Window>());
@@ -95,5 +99,41 @@ namespace WindowsBeLike
             }
         }
 
+        public void DisplayModal(string question, Action yesCallback, Action noCallback,  string note = "", string pos = "Yes", string neg = "No")
+        {
+            Debug.Log(question);
+            if (Modal != null)
+            {
+                Modal.RegisterOnClickYesCallback(yesCallback);
+                Modal.RegisterOnClickNoCallback(noCallback);
+                Modal.Question = question;
+                Modal.Note = note;
+                Modal.PositiveResponce = pos;
+                Modal.NegativeResponce = neg;
+            }
+            Modal.gameObject.SetActive(true);
+        }
+
+        /// <summary>
+        /// Called when the modal yes is clicked
+        /// </summary>
+        public void ModalYesCallback()
+        {
+            Debug.Log("yes");
+            Modal.UnregisterOnClickYesCallback(ModalYesCallback);
+            Modal.UnregisterOnClickNoCallback(ModalNoCallback);
+        }
+
+        /// <summary>
+        /// Called when modal no is clicked
+        /// </summary>
+        public void ModalNoCallback()
+        {
+            Debug.Log("No");
+            Modal.UnregisterOnClickYesCallback(ModalYesCallback);
+            Modal.UnregisterOnClickNoCallback(ModalNoCallback);
+        }
+
+     
     }
 }

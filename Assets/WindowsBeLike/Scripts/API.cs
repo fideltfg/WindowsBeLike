@@ -12,6 +12,8 @@ namespace WindowsBeLike
         {
             // valid commands
             ["/cls"] = null,
+            ["/ls"] = null,
+
             ["/set"] = new Dictionary<string, Type>()
             {
                 // valid switches and type of accepted values    
@@ -137,7 +139,6 @@ namespace WindowsBeLike
 
                                 switch (_command)
                                 {
-                                    case "/new":
                                     case "/open":
                                         Open(_switch);
                                         break;
@@ -158,7 +159,7 @@ namespace WindowsBeLike
             switch (_switch)
             {
                 case "console":
-                    UIController.Instance.ConsoleWindow.gameObject.SetActive(false);
+                    UIController.Instance.Console.gameObject.SetActive(false);
                     break;
 
             }
@@ -169,7 +170,7 @@ namespace WindowsBeLike
             switch (_switch)
             {
                 case "console":
-                    UIController.Instance.ConsoleWindow.gameObject.SetActive(true);
+                    UIController.Instance.Console.gameObject.SetActive(true);
                     break;
                 case "window":
                     UIController.Instance.NewWindow();
@@ -194,7 +195,7 @@ namespace WindowsBeLike
 
         private static void CLS()
         {
-            ConsoleWindow cw = UIController.Instance.ConsoleWindow as ConsoleWindow;
+            ConsoleWindow cw = UIController.Instance.Console as ConsoleWindow;
             cw.CLS();
         }
     }

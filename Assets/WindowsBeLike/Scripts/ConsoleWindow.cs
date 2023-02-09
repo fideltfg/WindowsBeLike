@@ -30,11 +30,17 @@ namespace WindowsBeLike
         {
             base.Start();
             ConsoleIntro();
+
         }
+
+        void Awake ()
+        {
+            chatBox.ActivateInputField();
+        }
+
 
         public void CLS()
         {
-            Debug.Log("cls");
             for (int i = 0; i < MessageList.Count; i++)
             {
                 MessageList[i].textObject.gameObject.SetActive(false);
@@ -42,18 +48,6 @@ namespace WindowsBeLike
             }
             MessageList.Clear();
             ConsoleIntro();
-        }
-
-
-        public override void Update()
-        {
-            base.Update();
-
-            // TODO move this to somplace more sensible
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-               
-            }
         }
 
         public void Send(string messageText, MessageType type = MessageType.INFO)
@@ -80,7 +74,9 @@ namespace WindowsBeLike
 
             // needed to get the scroll view to refresh corretly.
             Canvas.ForceUpdateCanvases();
-            //  ChatPanel.GetComponentInParent<ScrollRect>().scroll
+
+            // set focus back to the input box
+            chatBox.ActivateInputField();
         }
 
         private Message FormatMessage(Message message)
@@ -126,8 +122,8 @@ namespace WindowsBeLike
                     chatBox.text = "";
                 }
             }
+            chatBox.ActivateInputField();
         }
-
 
     }
 

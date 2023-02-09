@@ -1,13 +1,15 @@
 using UnityEngine;
 using TMPro;
-
-public class RectTransformResize : MonoBehaviour
+namespace WindowsBeLike
 {
-   public RectTransform TargetRect;
-
-    public void Update()
+    public class RectTransformResize : MonoBehaviour
     {
-        RectTransform rectTransform = GetComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(TargetRect.rect.width - 20, rectTransform.sizeDelta.y);
+        public RectTransform TargetRect;
+
+        public void Update()
+        {
+            RectTransform rectTransform = GetComponent<RectTransform>();
+            rectTransform.sizeDelta = new Vector2(TargetRect.rect.width - 20, rectTransform.sizeDelta.y);
+        }
     }
 }

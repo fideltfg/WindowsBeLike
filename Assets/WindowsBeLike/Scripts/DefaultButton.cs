@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using WindowsBeLike;
-
-public class DefaultButton : Button
+namespace WindowsBeLike
 {
-    public void OnClick()
+    public class DefaultButton : Button
     {
-        GetComponentInParent<MenuController>().ToggleMenu();
+        public void OnClick()
+        {
+            GetComponentInParent<MenuController>().ToggleMenu();
+        }
     }
+
 }

@@ -345,7 +345,7 @@ PrefabInstance:
     - target: {fileID: 8782431252384123502, guid: b4a1400f6c883314cafb293901684238,
         type: 3}
       propertyPath: m_Name
-      value: Window Menu Variant - Default
+      value: Window Menu
       objectReference: {fileID: 0}
     - target: {fileID: 8782431252384123503, guid: b4a1400f6c883314cafb293901684238,
         type: 3}

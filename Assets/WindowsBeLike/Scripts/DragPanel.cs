@@ -8,20 +8,22 @@ namespace WindowsBeLike
         private Vector2 pointerOffset;
         private RectTransform canvasRect;
         private RectTransform parentRect;
-        // private RectTransform thisRect;
-        void Awake()
-        {
-            Canvas canvas = GetComponentInParent<Canvas>();
-            if (canvas != null)
-            {
-                canvasRect = canvas.transform as RectTransform;
-                parentRect = transform.parent as RectTransform;
-            }
-        }
 
         public void OnPointerDown(PointerEventData data)
         {
             if (data.button != 0) return;
+
+            if(parentRect == null)
+            {
+                Canvas canvas = GetComponentInParent<Canvas>();
+                if (canvas != null)
+                {
+                    canvasRect = canvas.transform as RectTransform;
+                    parentRect = transform.parent as RectTransform;
+                }
+            }
+
+
             parentRect.SetAsLastSibling();
 
             // make the windows follow the mouse pointer at the point the user clicked.
