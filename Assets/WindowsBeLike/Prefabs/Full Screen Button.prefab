@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 7426199299116334070}
   - component: {fileID: 7426199299116334069}
   m_Layer: 5
-  m_Name: Top Button Right
+  m_Name: Full Screen Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

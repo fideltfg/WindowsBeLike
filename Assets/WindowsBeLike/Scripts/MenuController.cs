@@ -9,7 +9,6 @@ namespace WindowsBeLike
 {
     public class MenuController : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IPointerClickHandler
     {
-        RectTransform targetWindow;
         UIController _UIController;
         public GameObject MenuContainer;
         public GameObject Highlighter;
@@ -18,7 +17,7 @@ namespace WindowsBeLike
         {
 
             _UIController = GetComponentInParent<UIController>();
-            targetWindow = GetComponentInParent<RectTransform>();
+            // targetWindow = GetComponentInParent<RectTransform>();
             transform.SetAsLastSibling();
             if (MenuContainer != null)
             {
@@ -84,10 +83,35 @@ namespace WindowsBeLike
             _UIController.ToggleConsoleWindow();
         }
 
-        public void ShowTestModal()
+        /// <summary>
+        /// Called when the exit button is clicked
+        /// </summary>
+        public void Exit()
         {
-            _UIController.DisplayModal("Did you read the instuctions?", _UIController.ModalYesCallback, _UIController.ModalNoCallback);
+            _UIController.DisplayModal("Are you sure you want to exit?", _UIController.ModalYesCallback, _UIController.ModalNoCallback, "This does nothing in the editor!");
         }
+
+        public void Close()
+        {
+            _UIController.DisplayModal("Are you sure you want to close this window?", YesCloseWindowCallback, ModalNoCallback);
+        }
+
+        public void YesCloseWindowCallback()
+        {
+            _UIController.Modal.UnregisterOnClickYesCallback(YesCloseWindowCallback);
+            _UIController.Modal.UnregisterOnClickNoCallback(ModalNoCallback);
+
+            GetComponentInParent<Window>().CloseWindow();
+        }
+ 
+        public void ModalNoCallback()
+        {
+            _UIController.Modal.UnregisterOnClickYesCallback(YesCloseWindowCallback);
+            _UIController.Modal.UnregisterOnClickNoCallback(ModalNoCallback);
+        }
+
+
+
     }
 
 }

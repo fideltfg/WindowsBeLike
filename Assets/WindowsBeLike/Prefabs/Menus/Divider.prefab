@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 2607154505649500936}
   - component: {fileID: 8669648398331551412}
   m_Layer: 5
-  m_Name: Menu Divider
+  m_Name: Divider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

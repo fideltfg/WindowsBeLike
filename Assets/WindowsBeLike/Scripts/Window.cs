@@ -40,7 +40,7 @@ namespace WindowsBeLike
 
         public virtual void CloseWindow()
         {
-            transform.gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
     }
 }

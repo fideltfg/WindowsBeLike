@@ -116,20 +116,20 @@ namespace WindowsBeLike
 
         /// <summary>
         /// Called when the modal yes is clicked
+        /// you should write your own callback
         /// </summary>
         public void ModalYesCallback()
         {
-            Debug.Log("yes");
             Modal.UnregisterOnClickYesCallback(ModalYesCallback);
             Modal.UnregisterOnClickNoCallback(ModalNoCallback);
         }
 
         /// <summary>
         /// Called when modal no is clicked
+        /// you should write your own callback
         /// </summary>
         public void ModalNoCallback()
         {
-            Debug.Log("No");
             Modal.UnregisterOnClickYesCallback(ModalYesCallback);
             Modal.UnregisterOnClickNoCallback(ModalNoCallback);
         }

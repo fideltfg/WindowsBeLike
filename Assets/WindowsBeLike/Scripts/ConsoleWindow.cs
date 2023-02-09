@@ -33,11 +33,23 @@ namespace WindowsBeLike
 
         }
 
-        void Awake ()
+        void Awake()
         {
             chatBox.ActivateInputField();
         }
 
+        public override void OnEnable()
+        {
+            base.OnEnable();
+            chatBox.ActivateInputField();
+        }
+
+
+        public override void CloseWindow()
+        {
+            chatBox.DeactivateInputField();
+            base.CloseWindow();
+        }
 
         public void CLS()
         {
@@ -106,6 +118,7 @@ namespace WindowsBeLike
 
         void ConsoleIntro()
         {
+            Debug.Log(" Console intro");
             string text = "Welcome to Windows be like! Type /help or another valid command.";
             Send(text);
         }
