@@ -51,6 +51,11 @@ namespace WindowsBeLike
             base.CloseWindow();
         }
 
+        public void OnDisable()
+        {
+            chatBox.DeactivateInputField();
+        }
+
         public void CLS()
         {
             for (int i = 0; i < MessageList.Count; i++)
@@ -72,6 +77,7 @@ namespace WindowsBeLike
             }
 
             GameObject _textObject = Pooling.Pooler.root.GetPooledInstance(TextBlock);
+
             TextMeshProUGUI t = _textObject.GetComponent<TextMeshProUGUI>();
             _textObject.transform.SetParent(ChatPanel.transform, false);
             _textObject.gameObject.SetActive(true);
@@ -118,24 +124,26 @@ namespace WindowsBeLike
 
         void ConsoleIntro()
         {
-            Debug.Log(" Console intro");
-            string text = "Welcome to Windows be like! Type /help or another valid command.";
+            string text = "Welcome to Windows Be Like! Type /help or another valid command.";
             Send(text);
         }
 
         public void OnInputEnd()
         {
-            if (chatBox.isFocused == false)
+            if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return))
             {
-                if (chatBox.text.Length > 0)
+                if (chatBox.isFocused == false)
                 {
-                    // repeat the input back in the messanger window.
-                    Send(chatBox.text, ConsoleWindow.MessageType.PLAYER);
-                    API.Parse(chatBox.text);
-                    chatBox.text = "";
+                    if (chatBox.text.Length > 0)
+                    {
+                        // repeat the input back in the messanger window.
+                        Send(chatBox.text, MessageType.PLAYER);
+                        API.Parse(chatBox.text);
+                        chatBox.text = "";
+                    }
                 }
+                chatBox.ActivateInputField();
             }
-            chatBox.ActivateInputField();
         }
 
     }
@@ -149,8 +157,4 @@ namespace WindowsBeLike
 
 
     }
-
-
-
-
 }

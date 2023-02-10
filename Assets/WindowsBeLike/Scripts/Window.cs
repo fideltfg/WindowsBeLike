@@ -29,7 +29,16 @@ namespace WindowsBeLike
         {
             parentRect = transform.parent as RectTransform;
             transform.SetAsLastSibling();
-            UIController.Instance.AddNewWindowToWindowList(this);
+            if (UIController.Instance != null)
+            {
+                UIController.Instance.AddNewWindowToWindowList(this);
+            }
+            else if (GetComponentInParent<UIController>() != null)
+            {
+                GetComponentInParent<UIController>().AddNewWindowToWindowList(this);
+            }
+
+
         }
 
         public void OnPointerDown(PointerEventData data)

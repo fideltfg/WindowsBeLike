@@ -687,7 +687,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Window Menu
+  m_text: Task Menu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 79d36cf35cca9fa4eab056463598a8fa, type: 2}
   m_sharedMaterial: {fileID: -8335961888380824021, guid: 79d36cf35cca9fa4eab056463598a8fa,
@@ -715,8 +715,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10
-  m_fontSizeBase: 10
+  m_fontSize: 15
+  m_fontSizeBase: 15
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -832,7 +832,7 @@ PrefabInstance:
     - target: {fileID: 6344165074309075003, guid: d3bcf67766c08984e8e707ff1316baaa,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6344165074309075003, guid: d3bcf67766c08984e8e707ff1316baaa,
         type: 3}
@@ -842,17 +842,17 @@ PrefabInstance:
     - target: {fileID: 6344165074309075003, guid: d3bcf67766c08984e8e707ff1316baaa,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6344165074309075003, guid: d3bcf67766c08984e8e707ff1316baaa,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 150
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6344165074309075003, guid: d3bcf67766c08984e8e707ff1316baaa,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 15
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6344165074309075003, guid: d3bcf67766c08984e8e707ff1316baaa,
         type: 3}
@@ -892,12 +892,12 @@ PrefabInstance:
     - target: {fileID: 6344165074309075003, guid: d3bcf67766c08984e8e707ff1316baaa,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6344165074309075003, guid: d3bcf67766c08984e8e707ff1316baaa,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -67
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6344165074309075003, guid: d3bcf67766c08984e8e707ff1316baaa,
         type: 3}
@@ -937,7 +937,7 @@ PrefabInstance:
     - target: {fileID: 3485836256112843824, guid: bb2c9ed097ca61043a097bfaaa7708ea,
         type: 3}
       propertyPath: m_text
-      value: Console
+      value: Show/Hide Console
       objectReference: {fileID: 0}
     - target: {fileID: 7139751289195842854, guid: bb2c9ed097ca61043a097bfaaa7708ea,
         type: 3}
