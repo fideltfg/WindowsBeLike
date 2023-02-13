@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -64,6 +65,16 @@ namespace WindowsBeLike
 
             Vector2 newPointerPosition = new Vector2(clampedX, clampedY);
             return newPointerPosition;
+        }
+
+        internal void SetMinHeight(float minHeight)
+        {
+            this.minHeight = minHeight;
+        }
+
+        internal void SetMinWidth(float minWidth)
+        {
+            this.minWidth = minWidth;
         }
     }
 

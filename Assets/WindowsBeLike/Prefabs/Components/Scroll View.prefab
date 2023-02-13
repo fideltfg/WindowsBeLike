@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8633985207654421751}
   - component: {fileID: 8633985207654421752}
   m_Layer: 5
-  m_Name: Default Scroll View
+  m_Name: Scroll View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -658,7 +658,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 1.52
 --- !u!1 &2024369765486482011
 GameObject:
   m_ObjectHideFlags: 0

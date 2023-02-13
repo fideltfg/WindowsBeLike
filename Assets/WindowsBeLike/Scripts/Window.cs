@@ -3,6 +3,7 @@ using System.Xml;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace WindowsBeLike
 {
@@ -11,8 +12,14 @@ namespace WindowsBeLike
     {
         public string Title;
         public TextMeshProUGUI titleTextBox;
-        private RectTransform parentRect;
-
+        public DragCorner DragCorner;
+        public DragPanel DragPanel;
+        public Button FullscreenButton;
+        public float minWidth = 200f;
+        public float minHeight = 75f;
+        public bool Dragable = true;
+        public bool Resizeable = true;
+        public bool AllowFullscreen = true;
         public int windowIndex = 0;
 
 
@@ -22,12 +29,40 @@ namespace WindowsBeLike
             {
                 titleTextBox.text = Title;
             }
+
+            if (Resizeable)
+            {
+                GetComponentInChildren<DragCorner>().SetMinHeight(minHeight);
+                GetComponentInChildren<DragCorner>().SetMinWidth(minWidth);
+            }
+            else
+            {
+                GetComponentInChildren<DragCorner>().enabled = false;
+            }
+        }
+
+        void Update()
+        {
+            if (DragPanel != null)
+            {
+                DragPanel.enabled = Dragable;
+            }
+
+            if (DragCorner != null)
+            {
+                DragCorner.enabled = Resizeable;
+            }
+
+            if (FullscreenButton != null)
+            {
+                FullscreenButton.enabled = AllowFullscreen;
+            }
         }
 
 
         public virtual void OnEnable()
         {
-            parentRect = transform.parent as RectTransform;
+            // parentRect = transform.parent as RectTransform;
             transform.SetAsLastSibling();
             if (UIController.Instance != null)
             {
