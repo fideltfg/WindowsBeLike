@@ -67,7 +67,7 @@ namespace WindowsBeLike
             ConsoleIntro();
         }
 
-        public void Send(string messageText, MessageType type = MessageType.INFO)
+        public void Send(string messageText, MessageType messageType = MessageType.INFO)
         {
             if (MessageList.Count >= maxMessageCount)
             {
@@ -87,7 +87,7 @@ namespace WindowsBeLike
                 messageText = messageText,
                 // TODO change to use pooling
                 textObject = t, //Instantiate(TextBlock, ChatPanel.transform).GetComponent<Text>(),
-                messageType = type
+                messageType = messageType
             }));
 
             // needed to get the scroll view to refresh corretly.

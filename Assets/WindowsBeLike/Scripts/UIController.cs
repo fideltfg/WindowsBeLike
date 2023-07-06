@@ -10,14 +10,17 @@ namespace WindowsBeLike
     public class UIController : MonoBehaviour
     {
         public Window DefaultWindowPrefab;
-        public ConsoleWindow Console;
+        public ConsoleWindow ConsoleWindow;
+        public SettingsWindow SettingsWindow;
         public ModalWindow Modal;
 
         public static UIController Instance { get; private set; }
         public Pooler poolerPrefab;
         Pooler pooler;
         public LayerMask UILayerMask;
+        private CanvasGroup canvasGroup;
         private CanvasScaler canvasScaler;
+
         public float scaleStep = 0.1f;
         public float TaskAreaHeight = 22f;
         public Color32 DefaultTextColor;
@@ -31,19 +34,22 @@ namespace WindowsBeLike
 
         private void OnEnable()
         {
+            // get the pooler object from the scene 
             pooler = FindObjectOfType<Pooler>();
+
+            // if there is no pooler in the scene, instantiate one
             if (pooler == null)
             {
                 Instantiate(poolerPrefab);
             }
-            Instance = this;
-            canvasScaler = GetComponent<CanvasScaler>();
-        }
 
-        public void UpdateInfoPanel(Selectable selectable)
-        {
-            if (selectable == null) return;
-            //    InfoPanel.GetComponent<InfoPanel>().Populate(selectable);
+            Instance = this;
+
+            // get the canvas scaler component
+            canvasScaler = GetComponent<CanvasScaler>();
+            canvasGroup = GetComponent<CanvasGroup>();
+
+
         }
 
         private void Update()
@@ -51,29 +57,18 @@ namespace WindowsBeLike
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 // debug shortcut
-                SetScaleFactor(1.0f);
+                SetUIScale(1.0f);
             }
 
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                // debug shortcut
-                canvasScaler.scaleFactor += scaleStep;
+                canvasScaler.scaleFactor += SettingsManager.WindowScaleStep;
             }
 
         }
 
-        public void SetScaleFactor(float value)
-        {
-            canvasScaler.scaleFactor = Mathf.Clamp(value, 0.1f, 1);
-        }
 
-        public void ToggleConsoleWindow()
-        {
-            if (Console != null)
-            {
-                Console.gameObject.SetActive(!Console.gameObject.activeSelf);
-            }
-        }
+
 
         public static bool ObjectInLayerMask(GameObject obj, LayerMask layer)
         {
@@ -98,9 +93,9 @@ namespace WindowsBeLike
             }
         }
 
-        public void DisplayModal(string question, Action yesCallback, Action noCallback,  string note = "", string pos = "Yes", string neg = "No")
+        public void DisplayModal(string question, Action yesCallback, Action noCallback, string note = "", string pos = "Yes", string neg = "No")
         {
-            Debug.Log(question);
+            // Debug.Log(question);
             if (Modal != null)
             {
                 Modal.RegisterOnClickYesCallback(yesCallback);
@@ -133,6 +128,83 @@ namespace WindowsBeLike
             Modal.UnregisterOnClickNoCallback(ModalNoCallback);
         }
 
-     
+        private void OnApplicationQuit()
+        {
+            Serializer.Save();
+        }
+
+        public void OpenSettingsWindow()
+        {
+            if (SettingsWindow != null)
+            {
+                SettingsWindow.gameObject.SetActive(true);
+            }
+        }
+
+        public void CloseSettingsWindow()
+        {
+            if (SettingsWindow != null)
+            {
+                SettingsWindow.gameObject.SetActive(false);
+            }
+        }
+
+        public void ToggleSettingsWindow()
+        {
+            if (SettingsWindow != null)
+            {
+                SettingsWindow.gameObject.SetActive(!SettingsWindow.gameObject.activeSelf);
+            }
+        }
+
+        public void SetUIOpacity(float value)
+        {
+            canvasGroup.alpha = Mathf.Clamp(value, 0.02f, 1);
+            // update the control in the settings window to reflect the change
+            if (SettingsWindow != null && SettingsWindow.UIOpacitySlider != null)
+            {
+                SettingsWindow.UIOpacitySlider.value = value;
+            }
+        }
+
+        public void SetUIScale(float value)
+        {
+            canvasScaler.scaleFactor = Mathf.Clamp(value, 0.02f, 1);
+            // update the control in the settings window to reflect the change
+            if (SettingsWindow != null && SettingsWindow.UIScaleSlider != null)
+            {
+                SettingsWindow.UIScaleSlider.value = value;
+            }
+        }
+
+
+
+
+
+        internal void OpenConsoleWindow()
+        {
+            if (ConsoleWindow != null)
+            {
+                ConsoleWindow.gameObject.SetActive(true);
+            }
+        }
+
+        internal void CloseConsoleWindow()
+        {
+            if (ConsoleWindow != null)
+            {
+                ConsoleWindow.gameObject.SetActive(false);
+            }
+        }
+
+        public void ToggleConsoleWindow()
+        {
+            if (ConsoleWindow != null)
+            {
+                ConsoleWindow.gameObject.SetActive(!ConsoleWindow.gameObject.activeSelf);
+            }
+        }
+
+
     }
 }

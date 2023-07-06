@@ -51,8 +51,12 @@ namespace WindowsBeLike
                 if (!isFullScreen)
                 {
                     UpdateValues();
-                    targetAnchoredPosition = new Vector2(0, -UIController.Instance.TaskAreaHeight);
-                    targetSizeDelta = new Vector2(Screen.width, Screen.height - UIController.Instance.TaskAreaHeight);
+                   // targetAnchoredPosition = new Vector2(0, -UIController.Instance.TaskAreaHeight);
+                    targetAnchoredPosition = new Vector2(0, -SettingsManager.TaskAreaHeight);
+
+                    //targetSizeDelta = new Vector2(Screen.width, Screen.height - UIController.Instance.TaskAreaHeight);
+                    targetSizeDelta = new Vector2(Screen.width, Screen.height - SettingsManager.TaskAreaHeight);
+
                     isFullScreen = true;
                 }
                 else

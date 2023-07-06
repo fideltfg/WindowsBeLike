@@ -5,8 +5,54 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3547366726194135192, guid: 00323052bb56df64da92f4e1a4dc20e1,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3547366726194135192, guid: 00323052bb56df64da92f4e1a4dc20e1,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3547366726194135192, guid: 00323052bb56df64da92f4e1a4dc20e1,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3547366726194135192, guid: 00323052bb56df64da92f4e1a4dc20e1,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3547366726194135192, guid: 00323052bb56df64da92f4e1a4dc20e1,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleConsoleWindow
+      objectReference: {fileID: 0}
+    - target: {fileID: 3547366726194135192, guid: 00323052bb56df64da92f4e1a4dc20e1,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ToggleConsoleWindow
+      objectReference: {fileID: 0}
+    - target: {fileID: 3547366726194135192, guid: 00323052bb56df64da92f4e1a4dc20e1,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: WindowsBeLike.MenuController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3547366726194135192, guid: 00323052bb56df64da92f4e1a4dc20e1,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: WindowsBeLike.MenuController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3547366726194135192, guid: 00323052bb56df64da92f4e1a4dc20e1,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4284612322942866933, guid: 00323052bb56df64da92f4e1a4dc20e1,
         type: 3}
       propertyPath: m_Pivot.x
@@ -20,7 +66,7 @@ PrefabInstance:
     - target: {fileID: 4284612322942866933, guid: 00323052bb56df64da92f4e1a4dc20e1,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 4284612322942866933, guid: 00323052bb56df64da92f4e1a4dc20e1,
         type: 3}
@@ -45,7 +91,7 @@ PrefabInstance:
     - target: {fileID: 4284612322942866933, guid: 00323052bb56df64da92f4e1a4dc20e1,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 150
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4284612322942866933, guid: 00323052bb56df64da92f4e1a4dc20e1,
         type: 3}
@@ -115,7 +161,15 @@ PrefabInstance:
     - target: {fileID: 6603326067349927503, guid: 00323052bb56df64da92f4e1a4dc20e1,
         type: 3}
       propertyPath: m_Name
-      value: Toggle Console Button
+      value: Console Menu Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 7084047165591966094, guid: 00323052bb56df64da92f4e1a4dc20e1,
+        type: 3}
+      propertyPath: m_text
+      value: Show/Hide Console
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00323052bb56df64da92f4e1a4dc20e1, type: 3}

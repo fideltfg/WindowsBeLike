@@ -46,7 +46,7 @@ namespace WindowsBeLike
                 Vector2 delta = localPointerPosition - pointerOffset;
                 Vector2 newSize = parentRectTransform.sizeDelta + new Vector2(delta.x, -delta.y);// * 2;
                 newSize.x = Mathf.Clamp(newSize.x, minWidth, maxWidth);
-                newSize.y = Mathf.Clamp(newSize.y, minHeight, maxHeight);
+                newSize.y = Mathf.Clamp(newSize.y, minHeight, maxHeight - 20);
                 parentRectTransform.sizeDelta = newSize;
                 pointerOffset = localPointerPosition;
             }
@@ -63,8 +63,7 @@ namespace WindowsBeLike
             float clampedX = Mathf.Clamp(rawPointerPosition.x, canvasCorners[0].x, canvasCorners[2].x);
             float clampedY = Mathf.Clamp(rawPointerPosition.y, canvasCorners[0].y, canvasCorners[2].y);
 
-            Vector2 newPointerPosition = new Vector2(clampedX, clampedY);
-            return newPointerPosition;
+            return new Vector2(clampedX, clampedY);
         }
 
         internal void SetMinHeight(float minHeight)

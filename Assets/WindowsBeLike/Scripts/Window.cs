@@ -30,18 +30,21 @@ namespace WindowsBeLike
                 titleTextBox.text = Title;
             }
 
-            if (Resizeable)
+            if (DragCorner != null)
             {
-                GetComponentInChildren<DragCorner>().SetMinHeight(minHeight);
-                GetComponentInChildren<DragCorner>().SetMinWidth(minWidth);
-            }
-            else
-            {
-                GetComponentInChildren<DragCorner>().enabled = false;
+                if (Resizeable)
+                {
+                    DragCorner.SetMinHeight(minHeight);
+                    DragCorner.SetMinWidth(minWidth);
+                }
+                else
+                {
+                    DragCorner.enabled = false;
+                }
             }
         }
 
-        void Update()
+        public virtual void Update()
         {
             if (DragPanel != null)
             {

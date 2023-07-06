@@ -9,15 +9,14 @@ namespace WindowsBeLike
 {
     public class MenuController : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IPointerClickHandler
     {
-        UIController _UIController;
+        [HideInInspector]
+        public UIController _UIController;
         public GameObject MenuContainer;
         public GameObject Highlighter;
 
         private void OnEnable()
         {
-
             _UIController = GetComponentInParent<UIController>();
-            // targetWindow = GetComponentInParent<RectTransform>();
             transform.SetAsLastSibling();
             if (MenuContainer != null)
             {
@@ -29,7 +28,6 @@ namespace WindowsBeLike
             }
         }
 
-
         public void OnPointerClick(PointerEventData eventData)
         {
             if (GetComponentInParent<Window>())
@@ -40,11 +38,11 @@ namespace WindowsBeLike
             {
                 transform.SetAsLastSibling();
             }
-
+            Debug.Log($"click {name}");
             ToggleMenu();
         }
 
-        public void ToggleMenu()
+        public virtual void ToggleMenu()
         {
             if (MenuContainer != null)
             {
@@ -73,16 +71,6 @@ namespace WindowsBeLike
             }
         }
 
-        public void SetScaleFactor(float value)
-        {
-            _UIController.SetScaleFactor(value);
-        }
-
-        public void ToggleConsoleWindow()
-        {
-            _UIController.ToggleConsoleWindow();
-        }
-
         /// <summary>
         /// Called when the exit button is clicked
         /// </summary>
@@ -103,7 +91,7 @@ namespace WindowsBeLike
 
             GetComponentInParent<Window>().CloseWindow();
         }
- 
+
         public void ModalNoCallback()
         {
             _UIController.Modal.UnregisterOnClickYesCallback(YesCloseWindowCallback);
