@@ -21,6 +21,9 @@ namespace WindowsBeLike
         private CanvasGroup canvasGroup;
         private CanvasScaler canvasScaler;
 
+        // provids a callback for when the window focus changes
+        public event Action OnWindowFocusChange;
+
         public float scaleStep = 0.1f;
         public float TaskAreaHeight = 22f;
         public Color32 DefaultTextColor;
@@ -28,6 +31,23 @@ namespace WindowsBeLike
         public Color32 WarningTextColor;
         public Color32 DisabledColor;
         public Color32 DefaultBacgroundColor;
+
+        private Window windowInFocus;
+        public Window WindowInFocus
+        {
+            get
+            {
+                return windowInFocus;
+            }
+            set { 
+                if(value != windowInFocus)
+                {
+                    OnWindowFocusChange?.Invoke();
+                    windowInFocus = value;
+                }
+                
+            }
+        }
 
         [Serialize]
         public List<Window> WindowList = new List<Window>();
@@ -48,8 +68,6 @@ namespace WindowsBeLike
             // get the canvas scaler component
             canvasScaler = GetComponent<CanvasScaler>();
             canvasGroup = GetComponent<CanvasGroup>();
-
-
         }
 
         private void Update()
@@ -66,9 +84,6 @@ namespace WindowsBeLike
             }
 
         }
-
-
-
 
         public static bool ObjectInLayerMask(GameObject obj, LayerMask layer)
         {
@@ -130,7 +145,20 @@ namespace WindowsBeLike
 
         private void OnApplicationQuit()
         {
-            Serializer.Save();
+           //Serializer.Save();
+        }
+
+
+        public void RegisterOnWindowFocusCallback(Action callback)
+        {
+            // register a callback to be called when the window focus changes
+            OnWindowFocusChange += callback;
+        }
+
+        public void UnregisterOnWindowFocusCallback(Action callback)
+        {
+            // unregister a callback to be called when the window focus changes
+            OnWindowFocusChange -= callback;
         }
 
         public void OpenSettingsWindow()
@@ -176,10 +204,6 @@ namespace WindowsBeLike
                 SettingsWindow.UIScaleSlider.value = value;
             }
         }
-
-
-
-
 
         internal void OpenConsoleWindow()
         {

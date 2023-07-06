@@ -83,6 +83,8 @@ namespace WindowsBeLike
         {
             if (data.button != 0) return;
             transform.SetAsLastSibling();
+            UIController.Instance.WindowInFocus = this;
+            Debug.Log("Window in focus: " + UIController.Instance.WindowInFocus.Title);
         }
 
         public virtual void CloseWindow()
