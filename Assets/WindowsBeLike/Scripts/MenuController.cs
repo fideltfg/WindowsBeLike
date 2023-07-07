@@ -17,7 +17,7 @@ namespace WindowsBeLike
         private void OnEnable()
         {
             _UIController = GetComponentInParent<UIController>();
-            transform.SetAsLastSibling();
+           // transform.SetAsLastSibling();
             if (MenuContainer != null)
             {
                 MenuContainer.SetActive(false);
@@ -28,16 +28,16 @@ namespace WindowsBeLike
             }
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        public virtual void OnPointerClick(PointerEventData eventData)
         {
             if (GetComponentInParent<Window>())
             {
                 transform.parent.SetAsLastSibling();
             }
-            else
+           /* else
             {
                 transform.SetAsLastSibling();
-            }
+            }*/
             Debug.Log($"click {name}");
             ToggleMenu();
         }
@@ -51,7 +51,7 @@ namespace WindowsBeLike
             }
         }
 
-        public void OnPointerEnter(PointerEventData eventData)
+        public virtual void OnPointerEnter(PointerEventData eventData)
         {
             if (Highlighter != null)
             {
@@ -59,7 +59,7 @@ namespace WindowsBeLike
             }
         }
 
-        public void OnPointerExit(PointerEventData eventData)
+        public virtual void OnPointerExit(PointerEventData eventData)
         {
             if (MenuContainer != null)
             {
@@ -74,17 +74,17 @@ namespace WindowsBeLike
         /// <summary>
         /// Called when the exit button is clicked
         /// </summary>
-        public void Exit()
+        public virtual void Exit()
         {
             _UIController.DisplayModal("Are you sure you want to exit?", _UIController.ModalYesCallback, _UIController.ModalNoCallback, "This does nothing in the editor!");
         }
 
-        public void Close()
+        public virtual void Close()
         {
             _UIController.DisplayModal("Are you sure you want to close this window?", YesCloseWindowCallback, ModalNoCallback);
         }
 
-        public void YesCloseWindowCallback()
+        public virtual void YesCloseWindowCallback()
         {
             _UIController.Modal.UnregisterOnClickYesCallback(YesCloseWindowCallback);
             _UIController.Modal.UnregisterOnClickNoCallback(ModalNoCallback);
@@ -92,7 +92,7 @@ namespace WindowsBeLike
             GetComponentInParent<Window>().CloseWindow();
         }
 
-        public void ModalNoCallback()
+        public virtual void ModalNoCallback()
         {
             _UIController.Modal.UnregisterOnClickYesCallback(YesCloseWindowCallback);
             _UIController.Modal.UnregisterOnClickNoCallback(ModalNoCallback);
