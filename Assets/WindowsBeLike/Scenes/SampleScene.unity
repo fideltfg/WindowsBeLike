@@ -3587,7 +3587,7 @@ MonoBehaviour:
   m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1082}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
@@ -3653,6 +3653,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6575623053114100113}
     m_Modifications:
+    - target: {fileID: 370005681183643281, guid: 16201ec4fa5304a40af100fca401a8eb,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 474605943075434169, guid: 16201ec4fa5304a40af100fca401a8eb,
         type: 3}
       propertyPath: m_Pivot.x

@@ -1,6 +1,5 @@
-using System;
-using System.Xml;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -22,6 +21,11 @@ namespace WindowsBeLike
         public bool AllowFullscreen = true;
         public int windowIndex = 0;
 
+        private RectTransform rectTransform; // Cached reference to RectTransform component
+
+ 
+
+
 
         public virtual void Start()
         {
@@ -29,6 +33,9 @@ namespace WindowsBeLike
             {
                 titleTextBox.text = Title;
             }
+
+            rectTransform = GetComponent<RectTransform>(); // Get the reference to the RectTransform
+
 
             if (DragCorner != null)
             {
@@ -60,13 +67,32 @@ namespace WindowsBeLike
             {
                 FullscreenButton.enabled = AllowFullscreen;
             }
+
+
+
         }
 
+
+
+        public void ClampToScreen(Vector2 screenSize)
+        {
+            Vector3 pos = rectTransform.position;
+            float width = rectTransform.rect.width;
+            float height = rectTransform.rect.height;
+            float screenW = screenSize.x;
+            float screenH = screenSize.y;
+
+            pos.x = Mathf.Clamp(pos.x, width * 0.5f, screenW - width * 0.5f);
+            pos.y = Mathf.Clamp(pos.y, height * 0.5f, screenH - height * 0.5f);
+
+            rectTransform.position = pos;
+        }
 
         public virtual void OnEnable()
         {
             // parentRect = transform.parent as RectTransform;
             transform.SetAsLastSibling();
+
             if (UIController.Instance != null)
             {
                 UIController.Instance.AddNewWindowToWindowList(this);
@@ -76,6 +102,8 @@ namespace WindowsBeLike
                 GetComponentInParent<UIController>().AddNewWindowToWindowList(this);
             }
 
+            // register with the UIController screen resize event
+            UIController.OnResolutionChanged += ClampToScreen;
 
         }
 

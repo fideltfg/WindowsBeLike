@@ -13,17 +13,11 @@ namespace WindowsBeLike
         public ConsoleWindow ConsoleWindow;
         public SettingsWindow SettingsWindow;
         public ModalWindow Modal;
-
         public static UIController Instance { get; private set; }
+
         public Pooler poolerPrefab;
-        Pooler pooler;
+        private Pooler pooler;
         public LayerMask UILayerMask;
-        private CanvasGroup canvasGroup;
-        private CanvasScaler canvasScaler;
-
-        // provids a callback for when the window focus changes
-        public event Action OnWindowFocusChange;
-
         public float scaleStep = 0.1f;
         public float TaskAreaHeight = 22f;
         public Color32 DefaultTextColor;
@@ -32,20 +26,32 @@ namespace WindowsBeLike
         public Color32 DisabledColor;
         public Color32 DefaultBacgroundColor;
 
+
+        private CanvasGroup canvasGroup;
+        private CanvasScaler canvasScaler;
+        private int screenWidth;
+        private int screenHeight;
         private Window windowInFocus;
+
+        // provides a callback for when the resolution changes
+        public static event Action<Vector2> OnResolutionChanged;
+        // provids a callback for when the window focus changes
+        public static event Action OnWindowFocusChange;
+
         public Window WindowInFocus
         {
             get
             {
                 return windowInFocus;
             }
-            set { 
-                if(value != windowInFocus)
+            set
+            {
+                if (value != windowInFocus)
                 {
                     OnWindowFocusChange?.Invoke();
                     windowInFocus = value;
                 }
-                
+
             }
         }
 
@@ -54,6 +60,8 @@ namespace WindowsBeLike
 
         private void OnEnable()
         {
+
+
             // get the pooler object from the scene 
             pooler = FindObjectOfType<Pooler>();
 
@@ -68,22 +76,40 @@ namespace WindowsBeLike
             // get the canvas scaler component
             canvasScaler = GetComponent<CanvasScaler>();
             canvasGroup = GetComponent<CanvasGroup>();
+
+            // Store the current screen resolution
+
+            screenWidth = Screen.width;
+            screenHeight = Screen.height;
+
+            // Subscribe to the resolution changed event
+            OnResolutionChanged += OnResolutionChangedCallback;
+
+
+        }
+
+        private void OnDisable()
+        {
+            OnResolutionChanged -= OnResolutionChangedCallback;
         }
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            if (Screen.width != screenWidth || Screen.height != screenHeight)
             {
-                // debug shortcut
-                SetUIScale(1.0f);
+                OnResolutionChanged?.Invoke(new Vector2(Screen.width, Screen.height));
             }
-
-            if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                canvasScaler.scaleFactor += SettingsManager.WindowScaleStep;
-            }
-
         }
+
+        private void OnResolutionChangedCallback(Vector2 newScreenSize)
+        {
+            if (newScreenSize.x != screenWidth || newScreenSize.y != screenHeight)
+            {
+                screenHeight = (int)newScreenSize.y;
+                screenWidth = (int)newScreenSize.x;
+            }
+        }
+
 
         public static bool ObjectInLayerMask(GameObject obj, LayerMask layer)
         {
@@ -145,7 +171,7 @@ namespace WindowsBeLike
 
         private void OnApplicationQuit()
         {
-           //Serializer.Save();
+            //Serializer.Save();
         }
 
 

@@ -17,7 +17,6 @@ namespace WindowsBeLike
         private void OnEnable()
         {
             _UIController = GetComponentInParent<UIController>();
-           // transform.SetAsLastSibling();
             if (MenuContainer != null)
             {
                 MenuContainer.SetActive(false);
@@ -34,11 +33,10 @@ namespace WindowsBeLike
             {
                 transform.parent.SetAsLastSibling();
             }
-           /* else
+            else
             {
                 transform.SetAsLastSibling();
-            }*/
-            Debug.Log($"click {name}");
+            }
             ToggleMenu();
         }
 
