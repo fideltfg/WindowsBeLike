@@ -78,13 +78,11 @@ namespace WindowsBeLike
             canvasGroup = GetComponent<CanvasGroup>();
 
             // Store the current screen resolution
-
             screenWidth = Screen.width;
             screenHeight = Screen.height;
 
             // Subscribe to the resolution changed event
             OnResolutionChanged += OnResolutionChangedCallback;
-
 
         }
 
@@ -109,14 +107,12 @@ namespace WindowsBeLike
                 screenWidth = (int)newScreenSize.x;
             }
         }
-
-
         public static bool ObjectInLayerMask(GameObject obj, LayerMask layer)
         {
             return (layer.value & (1 << obj.layer)) > 0;
         }
 
-        public void NewWindow()
+        internal void NewWindow()
         {
             GameObject newWindow = Pooler.root.GetPooledInstance(DefaultWindowPrefab.gameObject);
             newWindow.transform.position = transform.position;

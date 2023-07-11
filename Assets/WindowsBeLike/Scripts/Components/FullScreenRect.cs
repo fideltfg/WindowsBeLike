@@ -7,7 +7,7 @@ namespace WindowsBeLike
         private RectTransform rectTransform;
         private Vector2 originalAnchoredPosition;
         private Vector2 originalSizeDelta;
-        private Vector2 targetAnchoredPosition;
+        public Vector2 targetAnchoredPosition;
         private Vector2 targetSizeDelta;
         private float duration = 0.33f;
         private float currentTime = 0f;
@@ -70,5 +70,4 @@ namespace WindowsBeLike
             }
         }
     }
-
 }

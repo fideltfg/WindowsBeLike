@@ -26,6 +26,9 @@ namespace WindowsBeLike
 
             parentRect.SetAsLastSibling();
 
+         
+
+
             // make the windows follow the mouse pointer at the point the user clicked.
             // without this the window will follow at the pivot point
             RectTransformUtility.ScreenPointToLocalPointInRectangle(parentRect, data.position, data.pressEventCamera, out pointerOffset);
@@ -37,11 +40,14 @@ namespace WindowsBeLike
             if (parentRect == null)
                 return;
 
-            Vector2 pointerPostion = ClampToWindow(data);
+
+            FullScreenRect fsr = GetComponentInParent<FullScreenRect>();
+
+            
 
             Vector2 localPointerPosition;
             if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                canvasRect, pointerPostion, data.pressEventCamera, out localPointerPosition
+                canvasRect, data.position, data.pressEventCamera, out localPointerPosition
             ))
             {
                 // Clamp the height of the parent rect to be at most canvas height minus UIController.Instance.TaskAreaHeight
