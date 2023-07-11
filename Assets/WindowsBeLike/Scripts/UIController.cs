@@ -1,4 +1,3 @@
-using Pooling;
 using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -15,8 +14,6 @@ namespace WindowsBeLike
         public ModalWindow Modal;
         public static UIController Instance { get; private set; }
 
-        public Pooler poolerPrefab;
-        private Pooler pooler;
         public LayerMask UILayerMask;
         public float scaleStep = 0.1f;
         public float TaskAreaHeight = 22f;
@@ -60,17 +57,6 @@ namespace WindowsBeLike
 
         private void OnEnable()
         {
-
-
-            // get the pooler object from the scene 
-            pooler = FindObjectOfType<Pooler>();
-
-            // if there is no pooler in the scene, instantiate one
-            if (pooler == null)
-            {
-                Instantiate(poolerPrefab);
-            }
-
             Instance = this;
 
             // get the canvas scaler component
@@ -110,15 +96,6 @@ namespace WindowsBeLike
         public static bool ObjectInLayerMask(GameObject obj, LayerMask layer)
         {
             return (layer.value & (1 << obj.layer)) > 0;
-        }
-
-        internal void NewWindow()
-        {
-            GameObject newWindow = Pooler.root.GetPooledInstance(DefaultWindowPrefab.gameObject);
-            newWindow.transform.position = transform.position;
-            newWindow.transform.SetParent(transform);
-            newWindow.SetActive(true);
-            AddNewWindowToWindowList(newWindow.GetComponent<Window>());
         }
 
         public void AddNewWindowToWindowList(Window window)
