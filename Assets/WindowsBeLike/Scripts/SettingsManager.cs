@@ -1,5 +1,7 @@
+/// <summary>
+/// Manages the settings for the WindowsBeLike interface.
+/// </summary>
 using System;
-
 using UnityEngine;
 
 public class SettingsManager : MonoBehaviour
@@ -29,7 +31,6 @@ public class SettingsManager : MonoBehaviour
                 OnWindowScaleChange?.Invoke();
                 windowScale = value;
             }
-            windowScale = value;
         }
     }
 
@@ -54,11 +55,23 @@ public class SettingsManager : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// Event raised when the window opacity changes.
+    /// </summary>
     public static event Action OnWindowOpacityChange;
+
+    /// <summary>
+    /// Event raised when the window scale changes.
+    /// </summary>
     public static event Action OnWindowScaleChange;
+
+    /// <summary>
+    /// Event raised when the task area height changes.
+    /// </summary>
     public static event Action OnTaskAreaHeightChange;
+
+    /// <summary>
+    /// Event raised when the task scale changes.
+    /// </summary>
     public static event Action OnTaskScaleChange;
-
-
 }

@@ -1,5 +1,4 @@
 using UnityEngine;
-using TMPro;
 namespace WindowsBeLike
 {
     public class RectTransformResize : MonoBehaviour

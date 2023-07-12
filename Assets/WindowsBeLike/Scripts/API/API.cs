@@ -1,23 +1,32 @@
-﻿using System;
+﻿/// <summary>
+/// The API class provides a set of static methods for parsing and executing commands in a WindowsBeLike interface.
+/// </summary>
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 namespace WindowsBeLike
 {
+    /// <summary>
+    /// Static class that represents the API for the WindowsBeLike interface.
+    /// </summary>
     public static class API
     {
+        /// <summary>
+        /// Represents the command history.
+        /// </summary>
         public static CommandHistory commandHistory = new CommandHistory();
 
+        /// <summary>
+        /// Dictionary containing the list of valid commands and their associated switches and types.
+        /// </summary>
         public static Dictionary<string, Dictionary<string, Type>> CommandList = new Dictionary<string, Dictionary<string, Type>>()
         {
-            // valid commands
             ["/cls"] = null,
             ["/ls"] = null,
 
             ["/set"] = new Dictionary<string, Type>()
             {
-                // valid switches and type of accepted values    
                 ["uiscale"] = typeof(float),
             },
             ["/open"] = new Dictionary<string, Type>()
@@ -30,19 +39,20 @@ namespace WindowsBeLike
                 ["console"] = null,
                 ["settings"] = null,
             }
-
         };
 
+        /// <summary>
+        /// Parses the given command and executes the corresponding action.
+        /// </summary>
+        /// <param name="cmd">The command to parse and execute.</param>
         public static void Parse(string cmd)
         {
             if (cmd != "")
             {
-                //string s = cmd.ToLower();
                 string s = cmd;
 
                 // add the command to the history
                 commandHistory.AddCommand(s);
-                //Debug.Log("added to history>> " + commandHistory.GetPrevious());
 
                 if (s.StartsWith("?") || s.StartsWith("/help"))
                 {
@@ -50,14 +60,12 @@ namespace WindowsBeLike
                     return;
                 }
 
-                // if the string starts with a known string
-                // get the first word
                 string[] splitCmd = s.Split(new char[] { ' ' });
 
                 if (splitCmd.Length == 1 && s.StartsWith("/"))
                 {
                     string _command = splitCmd[0];
-                    if (CommandList.ContainsKey(_command)) // its a valid command
+                    if (CommandList.ContainsKey(_command))
                     {
                         switch (_command.ToLower())
                         {
@@ -69,23 +77,22 @@ namespace WindowsBeLike
                 }
                 else if (splitCmd.Length == 3 && s.StartsWith("/"))
                 {
-                    string _command = splitCmd[0];//  Dictionary<string, Dictionary<string, Type>>
-                    string _switch = splitCmd[1];//   Dictionary<string, Type>
+                    string _command = splitCmd[0];
+                    string _switch = splitCmd[1];
 
-                    if (CommandList.ContainsKey(_command)) // its a valid command
+                    if (CommandList.ContainsKey(_command))
                     {
-                        if (CommandList[_command].ContainsKey(_switch)) // its a valid switch for the given command 
+                        if (CommandList[_command].ContainsKey(_switch))
                         {
                             Dictionary<string, Type> switchList = CommandList[splitCmd[0]];
 
-                            if (switchList.ContainsKey(_switch)) // its a valid switch for the given command 
+                            if (switchList.ContainsKey(_switch))
                             {
                                 Type type = switchList[_switch];
 
                                 switch (type.Name)
                                 {
                                     case "Single":
-                                        //Debug.Log($"Switch requires {type.Name} value!");
                                         float floatValue;
                                         if (float.TryParse(splitCmd[2], out floatValue))
                                         {
@@ -116,16 +123,15 @@ namespace WindowsBeLike
                 }
                 else if (splitCmd.Length == 2 && s.StartsWith("/"))
                 {
-
-                    string _command = splitCmd[0];//  Dictionary<string, Dictionary<string, Type>>
-                    string _switch = splitCmd[1];//   Dictionary<string, Type>
-                    if (CommandList.ContainsKey(_command)) // its a valid command
+                    string _command = splitCmd[0];
+                    string _switch = splitCmd[1];
+                    if (CommandList.ContainsKey(_command))
                     {
-                        if (CommandList[_command].ContainsKey(_switch)) // its a valid switch for the given command 
+                        if (CommandList[_command].ContainsKey(_switch))
                         {
                             Dictionary<string, Type> switchList = CommandList[splitCmd[0]];
 
-                            if (switchList.ContainsKey(_switch)) // its a valid switch for the given command 
+                            if (switchList.ContainsKey(_switch))
                             {
                                 switch (_command.ToLower())
                                 {
@@ -140,10 +146,13 @@ namespace WindowsBeLike
                         }
                     }
                 }
-
             }
         }
 
+        /// <summary>
+        /// Closes the specified window.
+        /// </summary>
+        /// <param name="_switch">The window to close.</param>
         private static void Close(string _switch)
         {
             switch (_switch.ToLower())
@@ -157,6 +166,10 @@ namespace WindowsBeLike
             }
         }
 
+        /// <summary>
+        /// Opens the specified window.
+        /// </summary>
+        /// <param name="_switch">The window to open.</param>
         private static void Open(string _switch)
         {
             Debug.Log($"Open {_switch}");
@@ -171,6 +184,11 @@ namespace WindowsBeLike
             }
         }
 
+        /// <summary>
+        /// Sets the specified switch value.
+        /// </summary>
+        /// <param name="_switch">The switch to set.</param>
+        /// <param name="value">The value to set.</param>
         private static void Set(string _switch, float value)
         {
             switch (_switch.ToLower())
@@ -184,6 +202,10 @@ namespace WindowsBeLike
             }
         }
 
+        /// <summary>
+        /// Displays the help information.
+        /// </summary>
+        /// <param name="s">The help command.</param>
         private static void DisplayHelp(string s)
         {
             ConsoleWindow cw = UIController.Instance.ConsoleWindow as ConsoleWindow;
@@ -196,9 +218,13 @@ namespace WindowsBeLike
             }
         }
 
+        /// <summary>
+        /// Clears the console window.
+        /// </summary>
         private static void CLS()
         {
             UIController.Instance.ConsoleWindow.CLS();
         }
     }
 }
+

@@ -1,3 +1,6 @@
+/// <summary>
+/// Controller for the user interface in the WindowsBeLike interface.
+/// </summary>
 using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -6,6 +9,9 @@ using UnityEngine.UI;
 
 namespace WindowsBeLike
 {
+    /// <summary>
+    /// Represents the controller for the user interface in the WindowsBeLike interface.
+    /// </summary>
     public class UIController : MonoBehaviour
     {
         public Window DefaultWindowPrefab;
@@ -23,7 +29,6 @@ namespace WindowsBeLike
         public Color32 DisabledColor;
         public Color32 DefaultBacgroundColor;
 
-
         private CanvasGroup canvasGroup;
         private CanvasScaler canvasScaler;
         private int screenWidth;
@@ -35,6 +40,9 @@ namespace WindowsBeLike
         // provids a callback for when the window focus changes
         public static event Action OnWindowFocusChange;
 
+        /// <summary>
+        /// Gets or sets the window currently in focus.
+        /// </summary>
         public Window WindowInFocus
         {
             get
@@ -48,7 +56,6 @@ namespace WindowsBeLike
                     OnWindowFocusChange?.Invoke();
                     windowInFocus = value;
                 }
-
             }
         }
 
@@ -69,7 +76,6 @@ namespace WindowsBeLike
 
             // Subscribe to the resolution changed event
             OnResolutionChanged += OnResolutionChangedCallback;
-
         }
 
         private void OnDisable()
@@ -93,11 +99,22 @@ namespace WindowsBeLike
                 screenWidth = (int)newScreenSize.x;
             }
         }
+
+        /// <summary>
+        /// Checks if an object is in the specified layer mask.
+        /// </summary>
+        /// <param name="obj">The GameObject to check.</param>
+        /// <param name="layer">The layer mask to compare against.</param>
+        /// <returns>True if the object is in the layer mask, otherwise false.</returns>
         public static bool ObjectInLayerMask(GameObject obj, LayerMask layer)
         {
             return (layer.value & (1 << obj.layer)) > 0;
         }
 
+        /// <summary>
+        /// Adds a new window to the window list.
+        /// </summary>
+        /// <param name="window">The window to add.</param>
         public void AddNewWindowToWindowList(Window window)
         {
             if (WindowList.Contains(window) == false)
@@ -107,9 +124,17 @@ namespace WindowsBeLike
             }
         }
 
+        /// <summary>
+        /// Displays a modal window with the specified question, callbacks, note, and button labels.
+        /// </summary>
+        /// <param name="question">The question to display.</param>
+        /// <param name="yesCallback">The callback for the Yes button.</param>
+        /// <param name="noCallback">The callback for the No button.</param>
+        /// <param name="note">The note to display.</param>
+        /// <param name="pos">The label for the positive response button (default is "Yes").</param>
+        /// <param name="neg">The label for the negative response button (default is "No").</param>
         public void DisplayModal(string question, Action yesCallback, Action noCallback, string note = "", string pos = "Yes", string neg = "No")
         {
-            // Debug.Log(question);
             if (Modal != null)
             {
                 Modal.RegisterOnClickYesCallback(yesCallback);
@@ -123,8 +148,8 @@ namespace WindowsBeLike
         }
 
         /// <summary>
-        /// Called when the modal yes is clicked
-        /// you should write your own callback
+        /// Called when the Yes button is clicked in the modal window.
+        /// You should write your own callback.
         /// </summary>
         public void ModalYesCallback()
         {
@@ -133,8 +158,8 @@ namespace WindowsBeLike
         }
 
         /// <summary>
-        /// Called when modal no is clicked
-        /// you should write your own callback
+        /// Called when the No button is clicked in the modal window.
+        /// You should write your own callback.
         /// </summary>
         public void ModalNoCallback()
         {
@@ -147,19 +172,27 @@ namespace WindowsBeLike
             //Serializer.Save();
         }
 
-
+        /// <summary>
+        /// Registers a callback to be called when the window focus changes.
+        /// </summary>
+        /// <param name="callback">The callback to register.</param>
         public void RegisterOnWindowFocusCallback(Action callback)
         {
-            // register a callback to be called when the window focus changes
             OnWindowFocusChange += callback;
         }
 
+        /// <summary>
+        /// Unregisters a callback from being called when the window focus changes.
+        /// </summary>
+        /// <param name="callback">The callback to unregister.</param>
         public void UnregisterOnWindowFocusCallback(Action callback)
         {
-            // unregister a callback to be called when the window focus changes
             OnWindowFocusChange -= callback;
         }
 
+        /// <summary>
+        /// Opens the settings window.
+        /// </summary>
         public void OpenSettingsWindow()
         {
             if (SettingsWindow != null)
@@ -168,6 +201,9 @@ namespace WindowsBeLike
             }
         }
 
+        /// <summary>
+        /// Closes the settings window.
+        /// </summary>
         public void CloseSettingsWindow()
         {
             if (SettingsWindow != null)
@@ -176,6 +212,9 @@ namespace WindowsBeLike
             }
         }
 
+        /// <summary>
+        /// Toggles the visibility of the settings window.
+        /// </summary>
         public void ToggleSettingsWindow()
         {
             if (SettingsWindow != null)
@@ -184,6 +223,10 @@ namespace WindowsBeLike
             }
         }
 
+        /// <summary>
+        /// Sets the opacity of the UI.
+        /// </summary>
+        /// <param name="value">The opacity value (between 0 and 1).</param>
         public void SetUIOpacity(float value)
         {
             canvasGroup.alpha = Mathf.Clamp(value, 0.02f, 1);
@@ -194,6 +237,10 @@ namespace WindowsBeLike
             }
         }
 
+        /// <summary>
+        /// Sets the scale of the UI.
+        /// </summary>
+        /// <param name="value">The scale value (between 0 and 1).</param>
         public void SetUIScale(float value)
         {
             canvasScaler.scaleFactor = Mathf.Clamp(value, 0.02f, 1);
@@ -220,6 +267,9 @@ namespace WindowsBeLike
             }
         }
 
+        /// <summary>
+        /// Toggles the visibility of the console window.
+        /// </summary>
         public void ToggleConsoleWindow()
         {
             if (ConsoleWindow != null)
@@ -227,7 +277,5 @@ namespace WindowsBeLike
                 ConsoleWindow.gameObject.SetActive(!ConsoleWindow.gameObject.activeSelf);
             }
         }
-
-
     }
 }

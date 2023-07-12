@@ -1,5 +1,8 @@
+/// <summary>
+/// Handles the full-screen behavior of a window.
+/// </summary>
 using UnityEngine;
-using WindowsBeLike;
+
 namespace WindowsBeLike
 {
     public class FullScreenRect : MonoBehaviour
@@ -14,18 +17,27 @@ namespace WindowsBeLike
         private bool isAnimating = false;
         public bool isFullScreen = false;
 
+        /// <summary>
+        /// Called when the script instance is being loaded.
+        /// </summary>
         private void Start()
         {
             rectTransform = GetComponent<RectTransform>();
             UpdateValues();
         }
 
+        /// <summary>
+        /// Updates the original anchored position and size delta.
+        /// </summary>
         public void UpdateValues()
         {
             originalAnchoredPosition = rectTransform.anchoredPosition;
             originalSizeDelta = rectTransform.sizeDelta;
         }
 
+        /// <summary>
+        /// Updates the full-screen animation each frame.
+        /// </summary>
         private void Update()
         {
             if (isAnimating)
@@ -43,6 +55,9 @@ namespace WindowsBeLike
             }
         }
 
+        /// <summary>
+        /// Toggles between full-screen and normal mode.
+        /// </summary>
         public void ToggleFullScreen()
         {
             transform.SetAsLastSibling();
@@ -51,12 +66,8 @@ namespace WindowsBeLike
                 if (!isFullScreen)
                 {
                     UpdateValues();
-                   // targetAnchoredPosition = new Vector2(0, -UIController.Instance.TaskAreaHeight);
                     targetAnchoredPosition = new Vector2(0, -SettingsManager.TaskAreaHeight);
-
-                    //targetSizeDelta = new Vector2(Screen.width, Screen.height - UIController.Instance.TaskAreaHeight);
                     targetSizeDelta = new Vector2(Screen.width, Screen.height - SettingsManager.TaskAreaHeight);
-
                     isFullScreen = true;
                 }
                 else

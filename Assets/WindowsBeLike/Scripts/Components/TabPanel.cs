@@ -1,50 +1,70 @@
-﻿using System;
+﻿/// <summary>
+/// Handles the functionality of a tab panel, allowing switching between tabs and displaying corresponding content.
+/// </summary>
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class TabPanel : MonoBehaviour
+
+namespace WindowsBeLike
 {
-    public bool useMask = true;
-    public List<Button> Tabs = new List<Button>();
-    public List<Transform> Pages = new List<Transform>();
-    int defaultTab = 0;
-    bool built = false;
-    
-
-    private void Awake()
+    public class TabPanel : MonoBehaviour
     {
-        if (built == false)
-        {
-            CloseAllTabs();
-            // set the default tab
-            OpenTab(defaultTab);
+        public bool useMask = true;
+        public List<Button> Tabs = new List<Button>();
+        public List<Transform> Pages = new List<Transform>();
+        private int defaultTab = 0;
+        private bool built = false;
 
-            built = true;
-        }
-    }
-
-    private void CloseAllTabs()
-    {
-        for (int i = 0; i < Tabs.Count; i++)
+        /// <summary>
+        /// Called when the script instance is being loaded.
+        /// </summary>
+        private void Awake()
         {
-            Pages[i].gameObject.SetActive(false);
-            if (useMask)
+            if (built == false)
             {
-                Tabs[i].transform.Find("Mask").gameObject.SetActive(false);
+                CloseAllTabs();
+                OpenTab(defaultTab);
+                built = true;
             }
         }
 
-    }
-
-    public void OpenTab(int i)
-    {
-        CloseAllTabs();
-        Pages[i].gameObject.SetActive(true);
-        if (useMask)
+        /// <summary>
+        /// Closes all tabs, deactivates their corresponding pages, and hides masks if applicable.
+        /// </summary>
+        private void CloseAllTabs()
         {
-            Tabs[i].transform.Find("Mask").gameObject.SetActive(true);
-        }
-  
-    }
+            for (int i = 0; i < Tabs.Count; i++)
+            {
+                Pages[i].gameObject.SetActive(false);
 
+                if (useMask)
+                {
+                    Transform mask = Tabs[i].transform.Find("Mask");
+                    if (mask != null)
+                    {
+                        mask.gameObject.SetActive(false);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Opens the specified tab, deactivates other tabs, activates the corresponding page, and shows masks if applicable.
+        /// </summary>
+        /// <param name="index">The index of the tab to open.</param>
+        public void OpenTab(int index)
+        {
+            CloseAllTabs();
+            Pages[index].gameObject.SetActive(true);
+
+            if (useMask)
+            {
+                Transform mask = Tabs[index].transform.Find("Mask");
+                if (mask != null)
+                {
+                    mask.gameObject.SetActive(true);
+                }
+            }
+        }
+    }
 }

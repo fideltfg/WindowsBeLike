@@ -1,3 +1,6 @@
+/// <summary>
+/// Represents a window in the WindowsBeLike interface.
+/// </summary>
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -6,6 +9,9 @@ using UnityEngine.UI;
 
 namespace WindowsBeLike
 {
+    /// <summary>
+    /// Represents a window in the WindowsBeLike interface.
+    /// </summary>
     [RequireComponent(typeof(FullScreenRect))]
     public class Window : MonoBehaviour, IPointerDownHandler
     {
@@ -23,10 +29,6 @@ namespace WindowsBeLike
 
         private RectTransform rectTransform; // Cached reference to RectTransform component
 
- 
-
-
-
         public virtual void Start()
         {
             if (titleTextBox != null)
@@ -35,7 +37,6 @@ namespace WindowsBeLike
             }
 
             rectTransform = GetComponent<RectTransform>(); // Get the reference to the RectTransform
-
 
             if (DragCorner != null)
             {
@@ -67,13 +68,12 @@ namespace WindowsBeLike
             {
                 FullscreenButton.enabled = AllowFullscreen;
             }
-
-
-
         }
 
-
-
+        /// <summary>
+        /// Clamps the window position within the screen boundaries.
+        /// </summary>
+        /// <param name="screenSize">The size of the screen.</param>
         public void ClampToScreen(Vector2 screenSize)
         {
             Vector3 pos = rectTransform.position;
@@ -90,7 +90,6 @@ namespace WindowsBeLike
 
         public virtual void OnEnable()
         {
-            // parentRect = transform.parent as RectTransform;
             transform.SetAsLastSibling();
 
             if (UIController.Instance != null)
@@ -102,11 +101,12 @@ namespace WindowsBeLike
                 GetComponentInParent<UIController>().AddNewWindowToWindowList(this);
             }
 
-            // register with the UIController screen resize event
             UIController.OnResolutionChanged += ClampToScreen;
-
         }
 
+        /// <summary>
+        /// Called when the pointer is down on the window.
+        /// </summary>
         public void OnPointerDown(PointerEventData data)
         {
             if (data.button != 0) return;
@@ -115,6 +115,9 @@ namespace WindowsBeLike
             Debug.Log("Window in focus: " + UIController.Instance.WindowInFocus.Title);
         }
 
+        /// <summary>
+        /// Closes the window.
+        /// </summary>
         public virtual void CloseWindow()
         {
             gameObject.SetActive(false);

@@ -1,3 +1,6 @@
+/// <summary>
+/// Handles the dragging behavior of the corner of a window.
+/// </summary>
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -15,6 +18,10 @@ namespace WindowsBeLike
         private float maxWidth;
         private float maxHeight;
 
+        /// <summary>
+        /// Called when the pointer is pressed down on the drag corner.
+        /// </summary>
+        /// <param name="data">The pointer event data.</param>
         public void OnPointerDown(PointerEventData data)
         {
             Canvas canvas = GetComponentInParent<Canvas>();
@@ -30,6 +37,10 @@ namespace WindowsBeLike
             RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, data.position, data.pressEventCamera, out pointerOffset);
         }
 
+        /// <summary>
+        /// Called when the pointer is dragged while holding down on the drag corner.
+        /// </summary>
+        /// <param name="data">The pointer event data.</param>
         public void OnDrag(PointerEventData data)
         {
             if (panelRectTransform == null)
@@ -44,7 +55,7 @@ namespace WindowsBeLike
             ))
             {
                 Vector2 delta = localPointerPosition - pointerOffset;
-                Vector2 newSize = parentRectTransform.sizeDelta + new Vector2(delta.x, -delta.y);// * 2;
+                Vector2 newSize = parentRectTransform.sizeDelta + new Vector2(delta.x, -delta.y);
                 newSize.x = Mathf.Clamp(newSize.x, minWidth, maxWidth);
                 newSize.y = Mathf.Clamp(newSize.y, minHeight, maxHeight - 20);
                 parentRectTransform.sizeDelta = newSize;
@@ -53,7 +64,12 @@ namespace WindowsBeLike
             GetComponentInParent<FullScreenRect>().isFullScreen = false;
         }
 
-        Vector2 ClampToWindow(PointerEventData data)
+        /// <summary>
+        /// Clamps the pointer position to the window boundaries.
+        /// </summary>
+        /// <param name="data">The pointer event data.</param>
+        /// <returns>The clamped pointer position.</returns>
+        private Vector2 ClampToWindow(PointerEventData data)
         {
             Vector2 rawPointerPosition = data.position;
 
@@ -66,15 +82,22 @@ namespace WindowsBeLike
             return new Vector2(clampedX, clampedY);
         }
 
+        /// <summary>
+        /// Sets the minimum height for resizing the window.
+        /// </summary>
+        /// <param name="minHeight">The minimum height value.</param>
         internal void SetMinHeight(float minHeight)
         {
             this.minHeight = minHeight;
         }
 
+        /// <summary>
+        /// Sets the minimum width for resizing the window.
+        /// </summary>
+        /// <param name="minWidth">The minimum width value.</param>
         internal void SetMinWidth(float minWidth)
         {
             this.minWidth = minWidth;
         }
     }
-
 }
