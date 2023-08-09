@@ -8,7 +8,7 @@ namespace WindowsBeLike
     /// <summary>
     /// Represents the settings window in the WindowsBeLike interface.
     /// </summary>
-    public class SettingsWindow : Window
+    public class SettingsWindow : SnapWindow
     {
         // add a slider to set the background opacity of windows
         public Slider UIOpacitySlider;

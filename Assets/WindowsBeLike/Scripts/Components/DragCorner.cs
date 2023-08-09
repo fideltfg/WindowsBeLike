@@ -4,10 +4,11 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace WindowsBeLike
 {
-    public class DragCorner : MonoBehaviour, IPointerDownHandler, IDragHandler
+    public class DragCorner : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
     {
         private Vector2 pointerOffset;
         private RectTransform canvasRectTransform;
@@ -17,7 +18,7 @@ namespace WindowsBeLike
         private float minHeight = 75f;
         private float maxWidth;
         private float maxHeight;
-
+        public Image CornerDragCursor;
         /// <summary>
         /// Called when the pointer is pressed down on the drag corner.
         /// </summary>
@@ -35,7 +36,8 @@ namespace WindowsBeLike
             }
             panelRectTransform.SetAsLastSibling();
             RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, data.position, data.pressEventCamera, out pointerOffset);
-        }
+           
+    }
 
         /// <summary>
         /// Called when the pointer is dragged while holding down on the drag corner.
@@ -43,15 +45,14 @@ namespace WindowsBeLike
         /// <param name="data">The pointer event data.</param>
         public void OnDrag(PointerEventData data)
         {
+            LockCursorWithinBounds();
             if (panelRectTransform == null)
                 return;
-
+            GetComponentInParent<FullScreenRect>().isFullScreen = false;
             Vector2 pointerPostion = ClampToWindow(data);
-
-            Vector2 localPointerPosition;
-
+            CornerDragCursor.gameObject.SetActive(true);
             if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                canvasRectTransform, pointerPostion, data.pressEventCamera, out localPointerPosition
+                canvasRectTransform, pointerPostion, data.pressEventCamera, out Vector2 localPointerPosition
             ))
             {
                 Vector2 delta = localPointerPosition - pointerOffset;
@@ -63,6 +64,47 @@ namespace WindowsBeLike
             }
             GetComponentInParent<FullScreenRect>().isFullScreen = false;
         }
+
+
+        public void OnPointerUp(PointerEventData data)
+        {
+            CornerDragCursor.gameObject.SetActive(false);
+            UnlockCursor();
+        }
+
+
+        void LockCursorWithinBounds()
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Confined;  // Lock cursor again
+        }
+
+        void UnlockCursor()
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+
+        Bounds CalculateObjectBoundsInScreenSpace()
+        {
+            Renderer renderer = GetComponent<Renderer>();
+            if (renderer != null)
+            {
+                Bounds bounds = renderer.bounds;
+                Vector3 minScreen = Camera.main.WorldToScreenPoint(bounds.min);
+                Vector3 maxScreen = Camera.main.WorldToScreenPoint(bounds.max);
+                bounds.min = minScreen;
+                bounds.max = maxScreen;
+                return bounds;
+            }
+            else
+            {
+                Debug.LogWarning("Renderer component not found.");
+                return new Bounds();
+            }
+        }
+
+
 
         /// <summary>
         /// Clamps the pointer position to the window boundaries.

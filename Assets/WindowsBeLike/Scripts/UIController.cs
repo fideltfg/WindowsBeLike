@@ -18,8 +18,9 @@ namespace WindowsBeLike
         public ConsoleWindow ConsoleWindow;
         public SettingsWindow SettingsWindow;
         public ModalWindow Modal;
-        public static UIController Instance { get; private set; }
 
+        public static UIController Instance { get; private set; }
+     
         public LayerMask UILayerMask;
         public float scaleStep = 0.1f;
         public float TaskAreaHeight = 22f;

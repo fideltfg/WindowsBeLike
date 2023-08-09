@@ -27,8 +27,9 @@ namespace WindowsBeLike
         public bool AllowFullscreen = true;
         public int windowIndex = 0;
 
-        private RectTransform rectTransform; // Cached reference to RectTransform component
-
+        internal RectTransform rectTransform; // Cached reference to RectTransform component
+        internal RectTransform targetRect;
+        internal RectTransform canvasRect;
         public virtual void Start()
         {
             if (titleTextBox != null)
@@ -109,7 +110,6 @@ namespace WindowsBeLike
         /// </summary>
         public void OnPointerDown(PointerEventData data)
         {
-            if (data.button != 0) return;
             transform.SetAsLastSibling();
             UIController.Instance.WindowInFocus = this;
             Debug.Log("Window in focus: " + UIController.Instance.WindowInFocus.Title);

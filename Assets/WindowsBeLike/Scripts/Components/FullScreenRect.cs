@@ -1,6 +1,7 @@
 /// <summary>
 /// Handles the full-screen behavior of a window.
 /// </summary>
+using System;
 using UnityEngine;
 
 namespace WindowsBeLike
@@ -8,8 +9,8 @@ namespace WindowsBeLike
     public class FullScreenRect : MonoBehaviour
     {
         private RectTransform rectTransform;
-        private Vector2 originalAnchoredPosition;
-        private Vector2 originalSizeDelta;
+        internal Vector2 originalAnchoredPosition;
+        internal Vector2 originalSizeDelta;
         public Vector2 targetAnchoredPosition;
         private Vector2 targetSizeDelta;
         private float duration = 0.33f;
@@ -79,6 +80,12 @@ namespace WindowsBeLike
                 currentTime = 0f;
                 isAnimating = true;
             }
+        }
+
+        internal void SetNewOrigon(Vector2 startPosition, Vector2 startSizeDelta)
+        {
+            originalAnchoredPosition = startPosition;
+            originalSizeDelta = startSizeDelta;
         }
     }
 }
