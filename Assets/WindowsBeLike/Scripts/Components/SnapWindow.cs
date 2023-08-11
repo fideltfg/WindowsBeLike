@@ -103,12 +103,14 @@ namespace WindowsBeLike
             rectTransform.sizeDelta = new Vector2(canvasRect.rect.width * .5f, canvasRect.rect.height);
         }
 
-        // Snap the window's top edge to the top edge of the canvasxx
+        // Snap the window's top edge to the top edge of the canvas
         private void SnapToTopEdge()
         {
             FullScreenRect fsr = GetComponent<FullScreenRect>();
             fsr.ToggleFullScreen();
-            fsr.SetNewOrigon(dragPanel.startPosition, dragPanel.startSizeDelta);
+
+            // set the full screen rect to the origion position
+            //fsr.SetNewOrigin(dragPanel.startPosition, dragPanel.startSizeDelta);
         }
 
         // Snap the window's bottom edge to the bottom edge of the canvas

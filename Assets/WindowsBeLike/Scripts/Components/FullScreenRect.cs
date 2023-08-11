@@ -24,17 +24,9 @@ namespace WindowsBeLike
         private void Start()
         {
             rectTransform = GetComponent<RectTransform>();
-            UpdateValues();
+            SetNewOrigin(rectTransform.anchoredPosition, rectTransform.sizeDelta);
         }
 
-        /// <summary>
-        /// Updates the original anchored position and size delta.
-        /// </summary>
-        public void UpdateValues()
-        {
-            originalAnchoredPosition = rectTransform.anchoredPosition;
-            originalSizeDelta = rectTransform.sizeDelta;
-        }
 
         /// <summary>
         /// Updates the full-screen animation each frame.
@@ -66,7 +58,8 @@ namespace WindowsBeLike
             {
                 if (!isFullScreen)
                 {
-                    UpdateValues();
+                    //UpdateValues();
+                    SetNewOrigin(rectTransform.anchoredPosition, rectTransform.sizeDelta);
                     targetAnchoredPosition = new Vector2(0, -SettingsManager.TaskAreaHeight);
                     targetSizeDelta = new Vector2(Screen.width, Screen.height - SettingsManager.TaskAreaHeight);
                     isFullScreen = true;
@@ -82,7 +75,7 @@ namespace WindowsBeLike
             }
         }
 
-        internal void SetNewOrigon(Vector2 startPosition, Vector2 startSizeDelta)
+        internal void SetNewOrigin(Vector2 startPosition, Vector2 startSizeDelta)
         {
             originalAnchoredPosition = startPosition;
             originalSizeDelta = startSizeDelta;

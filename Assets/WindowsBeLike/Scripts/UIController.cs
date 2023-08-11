@@ -14,13 +14,12 @@ namespace WindowsBeLike
     /// </summary>
     public class UIController : MonoBehaviour
     {
+        public static UIController Instance { get; private set; }
+
         public Window DefaultWindowPrefab;
         public ConsoleWindow ConsoleWindow;
         public SettingsWindow SettingsWindow;
         public ModalWindow Modal;
-
-        public static UIController Instance { get; private set; }
-     
         public LayerMask UILayerMask;
         public float scaleStep = 0.1f;
         public float TaskAreaHeight = 22f;
@@ -29,13 +28,13 @@ namespace WindowsBeLike
         public Color32 WarningTextColor;
         public Color32 DisabledColor;
         public Color32 DefaultBacgroundColor;
-
+        public GameObject WindowDragOutline;
         private CanvasGroup canvasGroup;
         private CanvasScaler canvasScaler;
         private int screenWidth;
         private int screenHeight;
-        private Window windowInFocus;
-
+        private Window windowInFocus; 
+        
         // provides a callback for when the resolution changes
         public static event Action<Vector2> OnResolutionChanged;
         // provids a callback for when the window focus changes

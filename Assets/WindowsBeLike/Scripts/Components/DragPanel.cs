@@ -5,73 +5,77 @@ namespace WindowsBeLike
 {
     public class DragPanel : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
     {
+        // Reference to the dummy object assigned in UIController
+        GameObject DummyObject
+        {
+            get
+            {
+                return UIController.Instance.WindowDragOutline;
+            }
+        }
+
         private RectTransform canvasRect;
-        private RectTransform parentRect;
+        private RectTransform parentRectTransform;
         private Vector2 pointerOffset;
-        internal Vector3 startPosition;
-        internal Vector2 startSizeDelta;
 
         public bool IsDragging { get; private set; }
 
-        // Called when the pointer is pressed down on the panel
         public void OnPointerDown(PointerEventData data)
         {
-
-
-            // Check if the left mouse button is pressed
             if (data.button != PointerEventData.InputButton.Left) return;
 
-            // Get the parent canvas and the parent's RectTransform for calculations
-            if (parentRect == null)
+            if (parentRectTransform == null)
             {
                 Canvas canvas = GetComponentInParent<Canvas>();
                 if (canvas != null)
                 {
                     canvasRect = canvas.GetComponent<RectTransform>();
-                    parentRect = transform.parent as RectTransform;
+                    parentRectTransform = transform.parent as RectTransform;
                 }
             }
 
-            startPosition = parentRect.position;
-            startSizeDelta = parentRect.sizeDelta;
+            // Set the position of the dummy object to match the parent window
+            DummyObject.transform.position = parentRectTransform.position;
 
-            // Notify the window that the pointer is down on the panel
-            Window window = GetComponentInParent<Window>();
-            window.OnPointerDown(data);
+            // Ensure the dummy object is the last sibling and visible on top
+            DummyObject.transform.SetAsLastSibling();
 
-            // Convert the pointer position to local space of the parent RectTransform
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(parentRect, data.position, data.pressEventCamera, out pointerOffset);
+          
 
-            // Set the dragging state to true
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(parentRectTransform, data.position, data.pressEventCamera, out pointerOffset);
+
             IsDragging = true;
         }
 
-        // Called when the pointer is released from the panel
         public void OnPointerUp(PointerEventData data)
         {
-            // Check if the left mouse button is released
             if (data.button != PointerEventData.InputButton.Left) return;
 
-            // Set the dragging state to false
+            // Move the parent window to the location where the dummy object was dropped
+            parentRectTransform.position = DummyObject.transform.position;
+
+            // Disable the dummy object until the next drag
+            DummyObject.SetActive(false);
+
             IsDragging = false;
         }
 
-        // Called when the pointer is dragged while holding down on the panel
         public void OnDrag(PointerEventData data)
         {
-            if (GetComponentInParent<FullScreenRect>().isFullScreen)
-            {
-                GetComponentInParent<FullScreenRect>().ToggleFullScreen();
-            }
-            // Check if the panel is currently being dragged with the left mouse button
-            if (!IsDragging || data.button != PointerEventData.InputButton.Left || parentRect == null) return;
+            if (!IsDragging || data.button != PointerEventData.InputButton.Left || parentRectTransform == null) return;
 
-            // Convert the pointer position to local space of the canvas RectTransform
+            // Enable the dummy object
+            DummyObject.SetActive(true);
+
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
                 canvasRect, data.position, data.pressEventCamera, out Vector2 localPointerPosition);
 
-            // Move the parent RectTransform based on the pointer's movement
-            parentRect.localPosition = localPointerPosition - pointerOffset;
+            // Move the dummy object based on the pointer's movement
+            DummyObject.transform.localPosition = localPointerPosition - pointerOffset;
+            DummyObject.GetComponent<RectTransform>().sizeDelta = parentRectTransform.sizeDelta;
+
+            // Ensure the dummy object remains the last sibling and visible on top
+            DummyObject.transform.SetAsLastSibling();
         }
     }
 }
