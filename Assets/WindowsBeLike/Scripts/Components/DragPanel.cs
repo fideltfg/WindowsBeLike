@@ -40,7 +40,6 @@ namespace WindowsBeLike
             // Ensure the dummy object is the last sibling and visible on top
             DummyObject.transform.SetAsLastSibling();
 
-          
 
             RectTransformUtility.ScreenPointToLocalPointInRectangle(parentRectTransform, data.position, data.pressEventCamera, out pointerOffset);
 
@@ -54,8 +53,11 @@ namespace WindowsBeLike
             // Move the parent window to the location where the dummy object was dropped
             parentRectTransform.position = DummyObject.transform.position;
 
+
+
             // Disable the dummy object until the next drag
             DummyObject.SetActive(false);
+
 
             IsDragging = false;
         }
@@ -64,12 +66,16 @@ namespace WindowsBeLike
         {
             if (!IsDragging || data.button != PointerEventData.InputButton.Left || parentRectTransform == null) return;
 
-            // Enable the dummy object
-            DummyObject.SetActive(true);
+
+
 
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
                 canvasRect, data.position, data.pressEventCamera, out Vector2 localPointerPosition);
 
+            // Enable the dummy object
+            DummyObject.SetActive(true);
+            // hide the dummy drag cursor
+            DummyObject.transform.GetChild(0).gameObject.SetActive(false);
             // Move the dummy object based on the pointer's movement
             DummyObject.transform.localPosition = localPointerPosition - pointerOffset;
             DummyObject.GetComponent<RectTransform>().sizeDelta = parentRectTransform.sizeDelta;

@@ -46,11 +46,13 @@ namespace WindowsBeLike
             if (dummyRectTransform == null) { return; }
 
             DummyObject.SetActive(true);
+            // show the dummy drag cursor
+            DummyObject.transform.GetChild(0).gameObject.SetActive(true);
             LockCursorWithinBounds();
 
             GetComponentInParent<FullScreenRect>().isFullScreen = false;
 
-            Vector2 pointerPostion = ClampToWindow(data); 
+            Vector2 pointerPostion = ClampToWindow(data);
 
             if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
                 canvasRectTransform, pointerPostion, data.pressEventCamera, out Vector2 localPointerPosition
@@ -68,6 +70,8 @@ namespace WindowsBeLike
 
         public void OnPointerUp(PointerEventData data)
         {
+            // show the dummy drag cursor
+            DummyObject.transform.GetChild(0).gameObject.SetActive(false);
             DummyObject.SetActive(false);
             //   CornerDragCursor.gameObject.SetActive(false);
             UnlockCursor();
@@ -92,13 +96,13 @@ namespace WindowsBeLike
 
         void LockCursorWithinBounds()
         {
-          //  Cursor.visible = false;
+            Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Confined;
         }
 
         void UnlockCursor()
         {
-           // Cursor.visible = true;
+            Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
 
